@@ -2,15 +2,12 @@
 const button = document.getElementById("searchBtn");
 const input = document.getElementById("cityInput");
 
-// Your REAL API key from OpenWeatherMap
-const apiKey = "Your api key here";
-
 // When button is clicked
 button.addEventListener("click", handleSearch);
 
 // Function definition
 function handleSearch() {
-  const city = input.value;
+  const city = input.value.trim();
 
   // if / else condition
   if (city === "") {
@@ -20,11 +17,11 @@ function handleSearch() {
   }
 }
 
-// Async function to fetch weather data
+// Async function to fetch weather data from YOUR backend
 async function getWeather(city) {
   try {
-    // API call (city-based)
-   const url = `web address here ${city}&appid=${apiKey}`;
+    // Call your backend instead of OpenWeather directly
+    const url = `http://localhost:3001/weather?city=${city}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -40,16 +37,14 @@ async function getWeather(city) {
     // DOM updates
     document.getElementById("cityName").textContent = data.name;
     document.getElementById("temp").textContent = data.main.temp + "°C";
-    document.getElementById("condition").textContent = data.weather[0].description;
-
+    document.getElementById("condition").textContent =
+      data.weather[0].description;
   } catch (error) {
     console.log("Error fetching weather:", error);
   }
 }
 
 /*
-
-
 FUNCTION:
 A function is a block of code that runs when called.
 Example: handleSearch()
